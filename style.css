@@ -1,0 +1,86 @@
+<style>
+  .video-container {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .product-image {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    vertical-align: top;
+    cursor: pointer;
+  }
+  
+  .product-info {
+    width: 50%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+  }
+  
+  .review {
+    clear: both;
+    text-align: center;
+  }
+</style>
+
+
+
+<form>
+  <div>
+    <label for="video_id">TikTok Video ID:</label>
+    <input type="text" id="video_id" name="video_id">
+  </div>
+  <div>
+    <label for="product_url">Amazon Product URL:</label>
+    <input type="text" id="product_url" name="product_url">
+  </div>
+  <div>
+    <label for="review">Review:</label>
+    <textarea id="review" name="review"></textarea>
+  </div>
+  <input type="submit" value="Generate Post" id="generate_button">
+</form>
+
+<div id="output" class="post"></div>
+
+<script>
+  document.querySelector("#generate_button").addEventListener("click", function(e) {
+    e.preventDefault();
+
+    const videoId = document.querySelector("#video_id").value;
+    const productUrl = document.querySelector("#product_url").value;
+    const review = document.querySelector("#review").value;
+
+    let post = "";
+    if (videoId) {
+      post += `
+        <div class="video-container">
+          <iframe class="video" src="https://www.tiktok.com/embed/${videoId}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+      `;
+    }
+    if (productUrl) {
+      post += `
+        <div class="product-container">
+          <img class="product-image" src="https://via.placeholder.com/200x200" alt="Product Image">
+          <div class="product-info">
+            <div class="product-title">Product Title</div>
+            <a href="${productUrl}" target="_blank">Buy Now</a>
+          </div>
+        </div>
+      `;
+    }
+    if (review) {
+      post += `
+        <div class="review">
+          <p>${review}</p>
+        </div>
+      `;
+    }
+
+    document.querySelector("#output").innerHTML = post;
+  });
+</script>
